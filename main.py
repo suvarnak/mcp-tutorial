@@ -10,11 +10,12 @@ load_dotenv()
 
 mcp = FastMCP("sk-docs-server")
 USER_AGENT = "sk-docs-app/1.0"
-SERPER_URL = "https://serper-ai.p.rapidapi.com/search"
+SERPER_URL = "https://google.serper.dev/search"
 
 docs_urls = {
-    "anthropic": "https://docs.anthropic.com/en/api/reference",
-    "google": "https://cloud.google.com/vertex-ai/docs/generative-ai/models/overview"
+    "langchain": "python.langchain.com/docs",
+    "llama-index": "docs.llamaindex.ai/en/stable",
+    "openai": "platform.openai.com/docs",
 }
 
 """
@@ -24,21 +25,20 @@ docs_urls = {
 3. get_docs
     this is the mcp tool that llm can use to get docs
 """
-async def search_web(query: str):
+
+
+async def search_web(query: str) -> dict | None:
     """
     Search the web for the most relevant information about the query in the form of urls
     returns search results in a dictionary
     """
     headers = {
-        "X-RapidAPI-Key": os.getenv("RAPIDAPI_KEY"),
-        "X-RapidAPI-Host": "serper-ai.p.rapidapi.com"
+        "X-API-KEY": os.getenv("SERPER_API_KEY"),
+        "Content-Type": "application/json",
     }
     payload = {
         "q": query,
-        "num": 2,
-        "gl": "us",
-        "hl": "en",
-        "google_domain": "google.com"
+        "num": 2
     }
     async with httpx.AsyncClient() as client:
         try:
@@ -51,9 +51,9 @@ async def search_web(query: str):
             return f"Error: {e}"
         except httpx.TimeoutException:
             return {"organic": []}
-    
 
-async def fetch_url():
+
+async def fetch_url(url: str):
     """
     Fetch the content of the url
     """
@@ -63,12 +63,9 @@ async def fetch_url():
             soup = BeautifulSoup(response.text, "html.parser")
             text = soup.get_text()
             return text
-        except httpx.HTTPStatusError as e:
-            return f"Error: {e}"
-        except httpx.RequestError as e:
-            return f"Error: {e}"
         except httpx.TimeoutException:
-            return ""
+            return "Timeout Error"
+
 
 @mcp.tool()
 async def get_docs(query: str, library: str):
@@ -85,16 +82,16 @@ async def get_docs(query: str, library: str):
     """
     if library not in docs_urls:
         raise ValueError(f"Library {library} not supported")
-    
+
     # Appending "site" to a search query, typically using the format "site:domain.com", tells the search engine to limit the search results to a specific website
     query = f"site:{docs_urls[library]} {query}"
-    search_results = asyncio.run(search_web(query))
+    search_results = await search_web(query)
     if len(search_results["organic"]) == 0:
         return "No Results Found"
+
+    text = ""
     for result in search_results["organic"]:
-        url = result["link"]
-        text += await fetch_url(url)
-      
+        text += await fetch_url(result["link"])
     return text
 
 if __name__ == "__main__":
