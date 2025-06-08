@@ -72,6 +72,7 @@ This project uses UV for Python environment management and runs an MCP server.
 
 7. Restart Claude Desktop for the changes to take effect
 
+
 ## Troubleshooting
 
 If the MCP tool doesn't appear in Claude Desktop after configuration:
@@ -94,6 +95,33 @@ If the MCP tool doesn't appear in Claude Desktop after configuration:
    - Check the Windows Event Viewer for any related errors
    - Verify that the UV executable path is correct
    - Ensure the project directory path exists and is accessible
+
+## Selecting theCustom MCP Server  in Claud Desktop 
+When properly configured, your MCP server (e.g., `sk-docs-server`) will appear in Claude Desktop which is acting as MCP client. Here's what to expect:
+
+1. **Accessing the Tool:**
+   - Open Claude Desktop.
+   - Click the settings icon next to the chat input to open the tools/search menu.
+
+2. **Selecting the MCP Server:**
+   - In the search menu, you should see your MCP server listed (e.g., `sk-docs-server`).
+   - Example:
+     
+     ![Select MCP Server](select_mcp.png)
+
+3. **Viewing the MCP Tool:**
+   - After selecting or enabling the MCP server, the available MCP tool(s) (such as `get_latest_docs`) will be accessible.
+   - Example:
+     
+     ![MCP Tool in Menu](tool.png)
+
+4. **In-Chat Appearance:**
+   - When the tool is enabled, it will be available for use in your chat session.
+   - Example:
+     
+     ![MCP Server in Claude Desktop](image.png)
+
+You should see your custom tool (like `get_latest_docs`) listed and ready to use.
 
 ## Project Structure
 
