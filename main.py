@@ -68,7 +68,7 @@ async def fetch_url(url: str):
 
 
 @mcp.tool()
-async def get_docs(query: str, library: str):
+async def get_latest_docs(query: str, library: str):
     """
     Search the web for given query and library.
     Supports anthropic  and Google's Vertex AI documentations

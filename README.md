@@ -57,7 +57,7 @@ This project uses UV for Python environment management and runs an MCP server.
          "command": "c:\\users\\<username>\\.local\\bin\\uv.exe",
          "args": [
            "--directory",
-           "c:\\path\\to\\your\\current\\project\\directory\\mcp-tutorial\\", 
+           "c:\\path\\to\\your\\current\\project\\directory\\mcp-tutorial\\",
            "run",
            "main.py"
          ]
@@ -71,6 +71,29 @@ This project uses UV for Python environment management and runs an MCP server.
 6. Save the configuration file
 
 7. Restart Claude Desktop for the changes to take effect
+
+## Troubleshooting
+
+If the MCP tool doesn't appear in Claude Desktop after configuration:
+
+1. Close Claude Desktop completely
+
+2. Check if Claude Desktop is still running in the background:
+   - Open Task Manager (Ctrl + Shift + Esc)
+   - Look for any "Claude Desktop" processes
+   - If found, select them and click "End Task"
+
+3. Verify the configuration file:
+   - Make sure the JSON is properly formatted
+   - Check that all paths are correct and use double backslashes
+   - Ensure the `mcpServers` section is at the root level of the JSON
+
+4. Restart Claude Desktop
+
+5. If the tool still doesn't appear:
+   - Check the Windows Event Viewer for any related errors
+   - Verify that the UV executable path is correct
+   - Ensure the project directory path exists and is accessible
 
 ## Project Structure
 
