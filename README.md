@@ -140,3 +140,11 @@ You should see your custom tool (like `get_latest_docs`) listed and ready to use
 - The project requires Python 3.12 or higher
 - All dependencies are managed through UV
 - The virtual environment is stored in the `.venv` directory
+
+## How Claude Desktop Uses Your MCP Server
+
+When you ask a question related to LangChain, LlamaIndex, or OpenAI (for example, "How to create a custom chat model in langchain?"), Claude Desktop will use your enabled MCP server to fetch and display the answer.
+
+Below is an example of Claude Desktop using the MCP tool to answer such a question:
+
+![Claude Desktop using MCP tool](claud-using-mcp-tool.png)
