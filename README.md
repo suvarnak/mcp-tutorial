@@ -1,6 +1,8 @@
 # MCP Tutorial
 
-This project uses UV for Python environment management and runs an MCP server.
+This project uses UV for Python environment management and runs an MCP server that fetches latest documentation for libraries like llamaindex or langchain.
+
+
 
 ## Prerequisites
 
@@ -9,35 +11,34 @@ This project uses UV for Python environment management and runs an MCP server.
 
 ## Setup Instructions
 
-1. Install UV if you haven't already:
+1. Install UV if you haven't already and initialize a new project:
    ```bash
-   pip install uv
+   uv init
    ```
 
-2. Create and activate a virtual environment using UV:
+2. Activate a virtual environment using uv:
    ```bash
-   uv venv
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
 
-3. Install dependencies using UV:
+3. Install dependencies in pyproject.toml using uv:
    ```bash
-   uv pip install -e .
+   uv sync
    ```
 
 ## Running the MCP Server
-
+The mcp server is defined in `main.py`
 1. Make sure your virtual environment is activated:
    ```bash
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
 
-2. Run the MCP server:
+2. Run the MCP server, to test it locally:
    ```bash
    uv run main.py
    ```
 
-## Running in Claude Desktop
+## Accessing the MCP Server from Claude Desktop
 
 1. Open Claude Desktop application
 
@@ -49,7 +50,8 @@ This project uses UV for Python environment management and runs an MCP server.
    ```
    (On Windows, this is typically at `C:\Users\<username>\AppData\Roaming\Claude\claude_desktop_config.json`)
 
-4. Add or modify the `mcpServers` section in the configuration file:
+4. Add or modify the `mcpServers` section in the configuration file. The command should be absolute path of `uv` executable, and the --directory option should be the absolute path of your project directory. 
+
    ```json
    {
      "mcpServers": {
@@ -75,9 +77,9 @@ This project uses UV for Python environment management and runs an MCP server.
 
 ## Troubleshooting
 
-If the MCP tool doesn't appear in Claude Desktop after configuration:
+If the MCP tool (defined in your main.py) doesn't appear in Claude Desktop after configuration:
 
-1. Close Claude Desktop completely
+1. Close Claude Desktop application completely
 
 2. Check if Claude Desktop is still running in the background:
    - Open Task Manager (Ctrl + Shift + Esc)
@@ -92,8 +94,8 @@ If the MCP tool doesn't appear in Claude Desktop after configuration:
 4. Restart Claude Desktop
 
 5. If the tool still doesn't appear:
-   - Check the Windows Event Viewer for any related errors
-   - Verify that the UV executable path is correct
+   - Check the claude logs (accessible through developer settings) or  Windows Event Viewer for any related errors.
+   - Verify that the uv executable path is correct
    - Ensure the project directory path exists and is accessible
 
 ## Selecting theCustom MCP Server  in Claud Desktop 
